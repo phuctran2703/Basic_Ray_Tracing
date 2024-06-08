@@ -85,7 +85,6 @@ public class SphereRender implements GLSurfaceView.Renderer {
             pointVertices[i * 3] = intersectionPoints.get(i)[0];
             pointVertices[i * 3 + 1] = intersectionPoints.get(i)[1];
             pointVertices[i * 3 + 2] = intersectionPoints.get(i)[2];
-            Log.d("Intersection", "Point: " + pointVertices[i * 3] + ", " + pointVertices[i * 3 + 1] + ", " + pointVertices[i * 3 + 2]);
         }
 
         mPointBuffer = ByteBuffer.allocateDirect(pointVertices.length * mBytesPerFloat)
@@ -127,11 +126,11 @@ public class SphereRender implements GLSurfaceView.Renderer {
 
         final float eyeX = 0.0f;
         final float eyeY = 1.0f;
-        final float eyeZ = -4.0f;
+        final float eyeZ = -2.0f * radius;
 
         final float lookX = 0.0f;
         final float lookY = 0.0f;
-        final float lookZ = 4.0f;
+        final float lookZ = 2.0f * radius;
 
         final float upX = 0.0f;
         final float upY = 1.0f;

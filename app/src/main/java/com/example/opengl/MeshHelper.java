@@ -97,7 +97,7 @@ class PlaneMeshHelper extends MeshHelper {
         return intersectionPoint;
     }
 
-    public float[] getBaricentricCoordinates(float[] p) {
+    public float[] getBarycentricCoordinates(float[] p) {
         float[] v0 = new float[]{a[0] - p[0], a[1] - p[1], a[2] - p[2]};
         float[] v1 = new float[]{b[0] - p[0], b[1] - p[1], b[2] - p[2]};
         float[] v2 = new float[]{c[0] - p[0], c[1] - p[1], c[2] - p[2]};
@@ -115,7 +115,7 @@ class PlaneMeshHelper extends MeshHelper {
 
     public boolean isInsideTriangle(float[] p) {
         if (intersectionPoint == null) return false;
-        float[] baricentricCoordinates = getBaricentricCoordinates(p);
+        float[] baricentricCoordinates = getBarycentricCoordinates(p);
         return baricentricCoordinates[0] >= 0 && baricentricCoordinates[1] >= 0 && baricentricCoordinates[2] >= 0 &&
                 baricentricCoordinates[0] <= 1 && baricentricCoordinates[1] <= 1 && baricentricCoordinates[2] <= 1 &&
                 (baricentricCoordinates[0] + baricentricCoordinates[1] + baricentricCoordinates[2]) == 1;

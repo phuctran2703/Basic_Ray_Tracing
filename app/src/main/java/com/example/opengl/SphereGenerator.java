@@ -5,7 +5,7 @@ public class SphereGenerator {
     public static float[] generate(float[] center, float radius, int numSlices, int numStacks) {
         float[] vertices = SphereGenerator.generateVertices(center, radius, numSlices, numStacks);
         short[] indices = SphereGenerator.generateIndices(numSlices, numStacks);
-        float[] result = new float[indices.length * 3]; // Multiply by 3 to account for x, y, z coordinates
+        float[] result = new float[indices.length * 3];
 
         for (int i = 0; i < indices.length; i++) {
             int vertexIndex = indices[i] * 3;
@@ -44,8 +44,7 @@ public class SphereGenerator {
     }
 
     public static short[] generateIndices(int numSlices, int numStacks) {
-        int numVertices = (numSlices + 1) * (numStacks + 1);
-        int numIndices = numSlices * numStacks * 6; // Each square is made up of two triangles, each with 3 indices
+        int numIndices = numSlices * numStacks * 6;
 
         short[] indices = new short[numIndices];
 
