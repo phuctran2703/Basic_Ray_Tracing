@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Ray Origin -->
+    <TextView
+        style="@style/SectionTitle"
+        android:text="Ray Origin (p0) [x0, y0, z0]" />
+
+    <EditText
+        android:id="@+id/editTextX0"
+        style="@style/InputField"
+        android:hint="x0" />
+
+    <EditText
+        android:id="@+id/editTextY0"
+        style="@style/InputField"
+        android:hint="y0" />
+
+    <EditText
+        android:id="@+id/editTextZ0"
+        style="@style/InputField"
+        android:hint="z0" />
+
+    <!-- Ray Direction -->
+    <TextView
+        style="@style/SectionTitle"
+        android:text="Ray Direction (d) [xd, yd, zd]" />
+
+    <EditText
+        android:id="@+id/editTextXd"
+        style="@style/InputField"
+        android:hint="xd" />
+
+    <EditText
+        android:id="@+id/editTextYd"
+        style="@style/InputField"
+        android:hint="yd" />
+
+    <EditText
+        android:id="@+id/editTextZd"
+        style="@style/InputField"
+        android:hint="zd" />
+
+    <!-- Sphere Center -->
+    <TextView
+        style="@style/SectionTitle"
+        android:text="Sphere Center (c) [xc, yc, zc]" />
+
+    <EditText
+        android:id="@+id/editTextXc"
+        style="@style/InputField"
+        android:hint="xc" />
+
+    <EditText
+        android:id="@+id/editTextYc"
+        style="@style/InputField"
+        android:hint="yc" />
+
+    <EditText
+        android:id="@+id/editTextZc"
+        style="@style/InputField"
+        android:hint="zc" />
+
+    <!-- Sphere Radius -->
+    <TextView
+        style="@style/SectionTitle"
+        android:text="Sphere Radius (r)" />
+
+    <EditText
+        android:id="@+id/editTextR"
+        style="@style/InputField"
+        android:hint="r" />
+
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/buttonSubmit"
+        style="@style/ActionButton"
+        android:layout_width="match_parent"
+        android:text="Submit" />
+
+    <!-- Return Button -->
+    <Button
+        android:id="@+id/buttonReturn"
+        style="@style/ActionButton"
+        android:layout_width="match_parent"
+        android:text="Return" />
+
+
+</LinearLayout>

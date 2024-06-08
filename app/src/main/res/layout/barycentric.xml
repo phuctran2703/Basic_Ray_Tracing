@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Triangle Vertices -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="Triangle Vertex A [xa, ya, za]" />
+
+        <EditText
+            android:id="@+id/editTextXa"
+            style="@style/InputField"
+            android:hint="xa" />
+
+        <EditText
+            android:id="@+id/editTextYa"
+            style="@style/InputField"
+            android:hint="ya" />
+
+        <EditText
+            android:id="@+id/editTextZa"
+            style="@style/InputField"
+            android:hint="za" />
+
+        <TextView
+            style="@style/SectionTitle"
+            android:text="Triangle Vertex B [xb, yb, zb]" />
+
+        <EditText
+            android:id="@+id/editTextXb"
+            style="@style/InputField"
+            android:hint="xb" />
+
+        <EditText
+            android:id="@+id/editTextYb"
+            style="@style/InputField"
+            android:hint="yb" />
+
+        <EditText
+            android:id="@+id/editTextZb"
+            style="@style/InputField"
+            android:hint="zb" />
+
+        <TextView
+            style="@style/SectionTitle"
+            android:text="Triangle Vertex C [xc, yc, zc]" />
+
+        <EditText
+            android:id="@+id/editTextXc"
+            style="@style/InputField"
+            android:hint="xc" />
+
+        <EditText
+            android:id="@+id/editTextYc"
+            style="@style/InputField"
+            android:hint="yc" />
+
+        <EditText
+            android:id="@+id/editTextZc"
+            style="@style/InputField"
+            android:hint="zc" />
+
+        <!-- Point Normal -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="Triangle Vertex A Normal [nxa, nya, nza]" />
+
+        <EditText
+            android:id="@+id/editTextNxa"
+            style="@style/InputField"
+            android:hint="nxa" />
+
+        <EditText
+            android:id="@+id/editTextNya"
+            style="@style/InputField"
+            android:hint="nya" />
+
+        <EditText
+            android:id="@+id/editTextNza"
+            style="@style/InputField"
+            android:hint="nza" />
+
+        <TextView
+            style="@style/SectionTitle"
+            android:text="Triangle Vertex B Normal [nxb, nyb, nzb]" />
+
+        <EditText
+            android:id="@+id/editTextNxb"
+            style="@style/InputField"
+            android:hint="nxb" />
+
+        <EditText
+            android:id="@+id/editTextNyb"
+            style="@style/InputField"
+            android:hint="nyb" />
+
+        <EditText
+            android:id="@+id/editTextNzb"
+            style="@style/InputField"
+            android:hint="nzb" />
+
+        <TextView
+            style="@style/SectionTitle"
+            android:text="Triangle Vertex C Normal [nxc, nyc, nzc]" />
+
+        <EditText
+            android:id="@+id/editTextNxc"
+            style="@style/InputField"
+            android:hint="nxc" />
+
+        <EditText
+            android:id="@+id/editTextNyc"
+            style="@style/InputField"
+            android:hint="nyc" />
+
+        <EditText
+            android:id="@+id/editTextNzc"
+            style="@style/InputField"
+            android:hint="nzc" />
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/buttonSubmit"
+            style="@style/ActionButton"
+            android:text="Submit" />
+
+        <!-- Return Button -->
+        <Button
+            android:id="@+id/buttonReturn"
+            style="@style/ActionButton"
+            android:layout_width="match_parent"
+            android:text="Return" />
+
+    </LinearLayout>
+</ScrollView>
