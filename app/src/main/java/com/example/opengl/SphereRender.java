@@ -78,7 +78,7 @@ public class SphereRender implements GLSurfaceView.Renderer {
     }
 
     private void setupIntersectionPointBuffer() {
-        List<float[]> intersectionPoints = new SphereIntersectionHelper(rayPosition, rayDirection, center, radius).getIntersectionPoints();
+        List<float[]> intersectionPoints = new SphereMeshHelper(rayPosition, rayDirection, center, radius).getIntersectionPoints();
         float[] pointVertices = new float[intersectionPoints.size() * 3];
 
         for (int i = 0; i < intersectionPoints.size(); i++) {

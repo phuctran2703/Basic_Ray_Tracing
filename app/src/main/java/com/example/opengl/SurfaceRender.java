@@ -4,28 +4,26 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
-import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.util.List;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class SurfaceRender implements GLSurfaceView.Renderer {
-    private PlaneIntersectionHelper helper;
+    private PlaneMeshHelper helper;
     private final float[] mModelMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
 
-    private float[] pointA;
-    private float[] pointB;
-    private float[] pointC;
+    private final float[] pointA;
+    private final float[] pointB;
+    private final float[] pointC;
 
-    private float[] rayPosition;
-    private float[] rayDirection;
+    private final float[] rayPosition;
+    private final float[] rayDirection;
 
     private float[] mColor = new float[4];
 
@@ -45,7 +43,6 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
     private int mViewMatrixHandle;
     private int mProjectionMatrixHandle;
 
-    private final int numTriangles;
     private final int mBytesPerFloat = 4;
     private final int mPositionDataSize = 3;
 
@@ -61,8 +58,6 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
             pointB[0], pointB[1], pointB[2],
             pointC[0], pointC[1], pointC[2]
         };
-
-        numTriangles = 1;
 
         mVertexBuffer = ByteBuffer.allocateDirect(vertexAttributeArray.length * mBytesPerFloat)
                 .order(ByteOrder.nativeOrder())
@@ -88,21 +83,19 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
     }
 
     private void setupIntersectionPointBuffer() {
-        this.helper = new PlaneIntersectionHelper(rayPosition, rayDirection, pointA, pointB, pointC);
-        List<float[]> intersectionPoints = helper.getIntersectionPoints();
-        float[] pointVertices = new float[intersectionPoints.size() * 3];
-
-        for (int i = 0; i < intersectionPoints.size(); i++) {
-            pointVertices[i * 3] = intersectionPoints.get(i)[0];
-            pointVertices[i * 3 + 1] = intersectionPoints.get(i)[1];
-            pointVertices[i * 3 + 2] = intersectionPoints.get(i)[2];
-            Log.d("Intersection", "Point: " + pointVertices[i * 3] + ", " + pointVertices[i * 3 + 1] + ", " + pointVertices[i * 3 + 2]);
+        this.helper = new PlaneMeshHelper(rayPosition, rayDirection, pointA, pointB, pointC);
+        float[] intersectionPoints = helper.getIntersectionPoints();
+        if (intersectionPoints == null) {
+            mPointBuffer = ByteBuffer.allocateDirect(0)
+                    .order(ByteOrder.nativeOrder())
+                    .asFloatBuffer();
+            return;
         }
 
-        mPointBuffer = ByteBuffer.allocateDirect(pointVertices.length * mBytesPerFloat)
+        mPointBuffer = ByteBuffer.allocateDirect(intersectionPoints.length * mBytesPerFloat)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
-        mPointBuffer.put(pointVertices);
+        mPointBuffer.put(intersectionPoints);
         mPointBuffer.position(0);
     }
 
@@ -208,8 +201,8 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 glUnused) {
         GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
 
-        long time = SystemClock.uptimeMillis() % 10000L;
-        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+        // long time = SystemClock.uptimeMillis() % 10000L;
+        // float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
 
         Matrix.setIdentityM(mModelMatrix, 0);
         // Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 1.0f, 0.0f);
@@ -258,9 +251,9 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
         GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, mPositionDataSize * mBytesPerFloat, 0);
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 
-        float[] p = new float[]{mPointBuffer.get(0), mPointBuffer.get(1), mPointBuffer.get(2)};
+        GLES30.glUniform1f(mPointSizeHandle, 10.0f);
 
-        GLES30.glUniform1f(mPointSizeHandle, 20.0f);
+        float[] p = new float[]{mPointBuffer.get(0), mPointBuffer.get(1), mPointBuffer.get(2)};
         if (this.helper.isInsideTriangle(p)) {
             GLES30.glUniform4f(mColorHandle, 1.0f, 0.0f, 0.0f, 1.0f);
         }

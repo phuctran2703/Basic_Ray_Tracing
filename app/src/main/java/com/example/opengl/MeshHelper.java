@@ -5,21 +5,21 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntersectionHelper {
+public class MeshHelper {
     protected float[] rayPosition;
     protected float[] rayDirection;
 
-    public IntersectionHelper(float[] rayPosition, float[] rayDirection) {
+    public MeshHelper(float[] rayPosition, float[] rayDirection) {
         this.rayPosition = rayPosition;
         this.rayDirection = rayDirection;
     }
 }
 
-class SphereIntersectionHelper extends IntersectionHelper {
+class SphereMeshHelper extends MeshHelper {
     private float[] center;
     private float radius;
 
-    public SphereIntersectionHelper(float[] rayPosition, float[] rayDirection, float[] center, float radius) {
+    public SphereMeshHelper(float[] rayPosition, float[] rayDirection, float[] center, float radius) {
         super(rayPosition, rayDirection);
         this.center = center;
         this.radius = radius;
@@ -42,7 +42,7 @@ class SphereIntersectionHelper extends IntersectionHelper {
         t[0] = (-1.0f * b + (float)Math.sqrt(discriminant)) / (2.0f * a);
         t[1] = (-1.0f * b - (float)Math.sqrt(discriminant)) / (2.0f * a);
         for (int i = 0; i < 2; i++){
-            Log.d("IntersectionHelper", "t[" + i + "] = " + t[i]);
+            Log.d("MeshHelper", "t[" + i + "] = " + t[i]);
             if (t[i] > 0) {
                 float[] intersectionPoint = new float[3];
                 for (int j = 0; j < 3; j++) {
@@ -55,21 +55,21 @@ class SphereIntersectionHelper extends IntersectionHelper {
     }
 }
 
-class PlaneIntersectionHelper extends IntersectionHelper {
+class PlaneMeshHelper extends MeshHelper {
     private float[] a;
     private float[] b;
     private float[] c;
-    List<float[]> intersectionPoints;
+    private float[] intersectionPoint;
 
-    public PlaneIntersectionHelper(float[] rayPosition, float[] rayDirection, float[] a, float[] b, float[] c) {
+    public PlaneMeshHelper(float[] rayPosition, float[] rayDirection, float[] a, float[] b, float[] c) {
         super(rayPosition, rayDirection);
         this.a = a;
         this.b = b;
         this.c = c;
-        this.intersectionPoints = new ArrayList<>();
+        this.intersectionPoint = null;
     }
 
-    public List<float[]> getIntersectionPoints() {
+    public float[] getIntersectionPoints() {
         float[] ab = new float[]{b[0] - a[0], b[1] - a[1], b[2] - a[2]};
         float[] ac = new float[]{c[0] - a[0], c[1] - a[1], c[2] - a[2]};
         float[] normal = new float[]{
@@ -80,26 +80,21 @@ class PlaneIntersectionHelper extends IntersectionHelper {
 
         float dotProduct = rayDirection[0] * normal[0] + rayDirection[1] * normal[1] + rayDirection[2] * normal[2];
 
-        if (Math.abs(dotProduct) < 1e-6) {
-            return intersectionPoints;
-        }
+        if (Math.abs(dotProduct) < 1e-6) return null;
 
         float distance = (normal[0] * (a[0] - rayPosition[0]) +
                 normal[1] * (a[1] - rayPosition[1]) +
                 normal[2] * (a[2] - rayPosition[2])) / dotProduct;
 
-        if (distance < 0) {
-            return intersectionPoints;
-        }
+        if (distance < 0) return null;
 
-        float[] intersectionPoint = new float[]{
+        this.intersectionPoint = new float[]{
                 rayPosition[0] + rayDirection[0] * distance,
                 rayPosition[1] + rayDirection[1] * distance,
                 rayPosition[2] + rayDirection[2] * distance
         };
 
-        intersectionPoints.add(intersectionPoint);
-        return intersectionPoints;
+        return intersectionPoint;
     }
 
     public float[] getBaricentricCoordinates(float[] p) {
@@ -119,7 +114,7 @@ class PlaneIntersectionHelper extends IntersectionHelper {
     }
 
     public boolean isInsideTriangle(float[] p) {
-        if (intersectionPoints.size() == 0) return false;
+        if (intersectionPoint == null) return false;
         float[] baricentricCoordinates = getBaricentricCoordinates(p);
         return baricentricCoordinates[0] >= 0 && baricentricCoordinates[1] >= 0 && baricentricCoordinates[2] >= 0 &&
                 baricentricCoordinates[0] <= 1 && baricentricCoordinates[1] <= 1 && baricentricCoordinates[2] <= 1 &&

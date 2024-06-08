@@ -16,7 +16,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class BarycentricRender implements GLSurfaceView.Renderer {
     private final float[] pointP;
-    private PlaneIntersectionHelper helper;
+    private PlaneMeshHelper helper;
     private final float[] mModelMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
@@ -80,8 +80,8 @@ public class BarycentricRender implements GLSurfaceView.Renderer {
     }
 
     private void setupRayBuffer() {
-        PlaneIntersectionHelper helper = new PlaneIntersectionHelper(new float[]{0.0f, 0.0f, 0.0f}, new float[]{0.0f, 0.0f, 0.0f}, pointA, pointB, pointC);
-        float[] a = helper.getBaricentricCoordinates();
+        PlaneMeshHelper helper = new PlaneMeshHelper(new float[]{0.0f, 0.0f, 0.0f}, new float[]{0.0f, 0.0f, 0.0f}, pointA, pointB, pointC);
+        float[] a = helper.getBaricentricCoordinates(pointP);
         float[] rayVertices = {
                 pointA[0], pointA[1], pointA[2],
                 pointA[0] + normalA[0], pointA[1] + normalA[1], pointA[2] + normalA[2],
