@@ -53,6 +53,14 @@ class SphereMeshHelper extends MeshHelper {
         }
         return intersectionPoints;
     }
+
+    public boolean isInsideSphere(float[] p) {
+        float distance = 0.0f;
+        for (int i = 0; i < 3; i++) {
+            distance += (p[i] - center[i]) * (p[i] - center[i]);
+        }
+        return distance <= radius;
+    }
 }
 
 class PlaneMeshHelper extends MeshHelper {
@@ -115,10 +123,10 @@ class PlaneMeshHelper extends MeshHelper {
 
     public boolean isInsideTriangle(float[] p) {
         if (intersectionPoint == null) return false;
-        float[] baricentricCoordinates = getBarycentricCoordinates(p);
-        return baricentricCoordinates[0] >= 0 && baricentricCoordinates[1] >= 0 && baricentricCoordinates[2] >= 0 &&
-                baricentricCoordinates[0] <= 1 && baricentricCoordinates[1] <= 1 && baricentricCoordinates[2] <= 1 &&
-                (baricentricCoordinates[0] + baricentricCoordinates[1] + baricentricCoordinates[2]) == 1;
+        float[] barycentricCoordinates = getBarycentricCoordinates(p);
+        Log.d("MeshHelper", "barycentricCoordinates: " + barycentricCoordinates[0] + ", " + barycentricCoordinates[1] + ", " + barycentricCoordinates[2]);
+        return barycentricCoordinates[0] <= 1 && barycentricCoordinates[1] <= 1 && barycentricCoordinates[2] <= 1 &&
+                (barycentricCoordinates[0] + barycentricCoordinates[1] + barycentricCoordinates[2]- 1.0f < 1e-6);
     }
 
     private float dotProduct(float[] v1, float[] v2) {
@@ -135,8 +143,7 @@ class PlaneMeshHelper extends MeshHelper {
 
     private float s(float[] a, float[] b) {
         float[] cross = crossProduct(a, b);
-        float magnitudeSquared = dotProduct(cross, cross);
-        return magnitudeSquared / 4.0f;
+        float magnitude = (float) Math.sqrt(dotProduct(cross, cross));
+        return magnitude / 2.0f;
     }
-
 }
