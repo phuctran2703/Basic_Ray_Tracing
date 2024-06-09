@@ -17,7 +17,6 @@ public class SphereResultActivity extends AppCompatActivity {
 
         mGLSurfaceView = new GLSurfaceView(this);
 
-
         data = getIntent().getExtras();
         float x0 = data.getFloat("x0");
         float y0 = data.getFloat("y0");
@@ -42,10 +41,8 @@ public class SphereResultActivity extends AppCompatActivity {
 
         if (supportsEs2)
         {
-            // Request an OpenGL ES 2.0 compatible context.
             mGLSurfaceView.setEGLContextClientVersion(2);
 
-            // Set the renderer to our demo renderer, defined below.
             mGLSurfaceView.setRenderer(new SphereRender(rayPosition, rayDirection, center, radius));
         }
         else
@@ -58,7 +55,6 @@ public class SphereResultActivity extends AppCompatActivity {
     @Override
     protected void onResume()
     {
-        // The activity must call the GL surface view's onResume() on activity onResume().
         super.onResume();
         mGLSurfaceView.onResume();
     }
@@ -66,7 +62,6 @@ public class SphereResultActivity extends AppCompatActivity {
     @Override
     protected void onPause()
     {
-        // The activity must call the GL surface view's onPause() on activity onPause().
         super.onPause();
         mGLSurfaceView.onPause();
     }

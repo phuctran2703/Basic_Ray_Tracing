@@ -26,7 +26,6 @@ public class PolygonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ray_to_polygon);
 
-        // Ánh xạ các view từ XML
         editTextX0 = findViewById(R.id.editTextX0);
         editTextY0 = findViewById(R.id.editTextY0);
         editTextZ0 = findViewById(R.id.editTextZ0);
@@ -65,7 +64,7 @@ public class PolygonActivity extends AppCompatActivity {
                 float zc = Float.parseFloat(editTextZc.getText().toString());
 
                 Intent intent = new Intent(PolygonActivity.this, PolygonResultActivity.class);
-                // Gửi dữ liệu đến `ResultActivity` thông qua `Intent`
+                // Send data to `ResultActivity` by `Intent`
                 intent.putExtra("x0", x0);
                 intent.putExtra("y0", y0);
                 intent.putExtra("z0", z0);

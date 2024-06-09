@@ -72,7 +72,6 @@ public class BarycentricActivity extends AppCompatActivity {
             editTextNzc.setText(String.valueOf(savedInstanceState.getFloat("nzc")));
         }
 
-        // Xử lý sự kiện khi nhấn nút "Submit"
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +123,6 @@ public class BarycentricActivity extends AppCompatActivity {
             }
         });
 
-        // Xử lý sự kiện khi nhấn nút "Return"
         buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +134,7 @@ public class BarycentricActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Lưu trạng thái hiện tại vào Bundle
+        // Save state in Bundle
         outState.putFloat("xa", Float.parseFloat(editTextXa.getText().toString()));
         outState.putFloat("ya", Float.parseFloat(editTextYa.getText().toString()));
         outState.putFloat("za", Float.parseFloat(editTextZa.getText().toString()));

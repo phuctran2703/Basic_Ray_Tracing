@@ -13,14 +13,13 @@ public class SphereActivity extends AppCompatActivity {
     private EditText editTextX0, editTextY0, editTextZ0, editTextXd, editTextYd, editTextZd, editTextXc, editTextYc, editTextZc, editTextR;
     private Button buttonSubmit, buttonReturn;
     private TextView textViewResult;
-    private Bundle data; // Bundle lưu trữ dữ liệu từ màn hình trước
+    private Bundle data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ray_to_sphere);
 
-        // Ánh xạ các view từ XML
         editTextX0 = findViewById(R.id.editTextX0);
         editTextY0 = findViewById(R.id.editTextY0);
         editTextZ0 = findViewById(R.id.editTextZ0);
@@ -34,7 +33,6 @@ public class SphereActivity extends AppCompatActivity {
         buttonSubmit = findViewById(R.id.buttonSubmit);
         buttonReturn = findViewById(R.id.buttonReturn);
 
-        // Xử lý sự kiện khi nhấn nút "Submit"
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +47,7 @@ public class SphereActivity extends AppCompatActivity {
                 float zc = Float.parseFloat(editTextZc.getText().toString());
                 float r = Float.parseFloat(editTextR.getText().toString());
 
-                // Chuyển dữ liệu sang màn hình SphereResultActivity
+                // Send data to SphereResultActivity
                 Intent intent = new Intent(SphereActivity.this, SphereResultActivity.class);
                 Bundle data = new Bundle();
                 data.putFloat("x0", x0);
@@ -67,7 +65,6 @@ public class SphereActivity extends AppCompatActivity {
             }
         });
 
-        // Xử lý sự kiện khi nhấn nút "Return"
         buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
