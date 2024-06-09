@@ -12,6 +12,7 @@ public class BarycentricActivity extends AppCompatActivity {
     private EditText editTextXa, editTextYa, editTextZa;
     private EditText editTextXb, editTextYb, editTextZb;
     private EditText editTextXc, editTextYc, editTextZc;
+    private EditText editTextXp, editTextYp, editTextZp;
     private EditText editTextNxa, editTextNya, editTextNza;
     private EditText editTextNxb, editTextNyb, editTextNzb;
     private EditText editTextNxc, editTextNyc, editTextNzc;
@@ -32,6 +33,9 @@ public class BarycentricActivity extends AppCompatActivity {
         editTextXc = findViewById(R.id.editTextXc);
         editTextYc = findViewById(R.id.editTextYc);
         editTextZc = findViewById(R.id.editTextZc);
+        editTextXp = findViewById(R.id.editTextXp);
+        editTextYp = findViewById(R.id.editTextYp);
+        editTextZp = findViewById(R.id.editTextZp);
         editTextNxa = findViewById(R.id.editTextNxa);
         editTextNya = findViewById(R.id.editTextNya);
         editTextNza = findViewById(R.id.editTextNza);
@@ -54,6 +58,9 @@ public class BarycentricActivity extends AppCompatActivity {
             editTextXc.setText(String.valueOf(savedInstanceState.getFloat("xc")));
             editTextYc.setText(String.valueOf(savedInstanceState.getFloat("yc")));
             editTextZc.setText(String.valueOf(savedInstanceState.getFloat("zc")));
+            editTextXp.setText(String.valueOf(savedInstanceState.getFloat("xp")));
+            editTextYp.setText(String.valueOf(savedInstanceState.getFloat("yp")));
+            editTextZp.setText(String.valueOf(savedInstanceState.getFloat("zp")));
             editTextNxa.setText(String.valueOf(savedInstanceState.getFloat("nxa")));
             editTextNya.setText(String.valueOf(savedInstanceState.getFloat("nya")));
             editTextNza.setText(String.valueOf(savedInstanceState.getFloat("nza")));
@@ -78,6 +85,9 @@ public class BarycentricActivity extends AppCompatActivity {
                 float xc = Float.parseFloat(editTextXc.getText().toString());
                 float yc = Float.parseFloat(editTextYc.getText().toString());
                 float zc = Float.parseFloat(editTextZc.getText().toString());
+                float xp = Float.parseFloat(editTextXp.getText().toString());
+                float yp = Float.parseFloat(editTextYp.getText().toString());
+                float zp = Float.parseFloat(editTextZp.getText().toString());
                 float nxa = Float.parseFloat(editTextNxa.getText().toString());
                 float nya = Float.parseFloat(editTextNya.getText().toString());
                 float nza = Float.parseFloat(editTextNza.getText().toString());
@@ -98,6 +108,9 @@ public class BarycentricActivity extends AppCompatActivity {
                 intent.putExtra("xc", xc);
                 intent.putExtra("yc", yc);
                 intent.putExtra("zc", zc);
+                intent.putExtra("xp", xp);
+                intent.putExtra("yp", yp);
+                intent.putExtra("zp", zp);
                 intent.putExtra("nxa", nxa);
                 intent.putExtra("nya", nya);
                 intent.putExtra("nza", nza);
@@ -133,6 +146,9 @@ public class BarycentricActivity extends AppCompatActivity {
         outState.putFloat("xc", Float.parseFloat(editTextXc.getText().toString()));
         outState.putFloat("yc", Float.parseFloat(editTextYc.getText().toString()));
         outState.putFloat("zc", Float.parseFloat(editTextZc.getText().toString()));
+        outState.putFloat("xp", Float.parseFloat(editTextXp.getText().toString()));
+        outState.putFloat("yp", Float.parseFloat(editTextYp.getText().toString()));
+        outState.putFloat("zp", Float.parseFloat(editTextZp.getText().toString()));
         outState.putFloat("nxa", Float.parseFloat(editTextNxa.getText().toString()));
         outState.putFloat("nya", Float.parseFloat(editTextNya.getText().toString()));
         outState.putFloat("nza", Float.parseFloat(editTextNza.getText().toString()));

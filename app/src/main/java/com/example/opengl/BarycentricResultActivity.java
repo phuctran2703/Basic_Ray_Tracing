@@ -1,20 +1,22 @@
 package com.example.opengl;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.pm.ConfigurationInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class BarycentricResultActivity extends AppCompatActivity {
-    private TextView textViewResult;
+    private GLSurfaceView mGLSurfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.result);
+        mGLSurfaceView = new GLSurfaceView(this);
 
-        textViewResult = findViewById(R.id.textViewResult);
-
-        // Nhận dữ liệu từ Intent
+        // Get data from Intent
         float xa = getIntent().getFloatExtra("xa", 0);
         float ya = getIntent().getFloatExtra("ya", 0);
         float za = getIntent().getFloatExtra("za", 0);
@@ -24,6 +26,9 @@ public class BarycentricResultActivity extends AppCompatActivity {
         float xc = getIntent().getFloatExtra("xc", 0);
         float yc = getIntent().getFloatExtra("yc", 0);
         float zc = getIntent().getFloatExtra("zc", 0);
+        float xp = getIntent().getFloatExtra("xp", 0);
+        float yp = getIntent().getFloatExtra("yp", 0);
+        float zp = getIntent().getFloatExtra("zp", 0);
         float nxa = getIntent().getFloatExtra("nxa", 0);
         float nya = getIntent().getFloatExtra("nya", 0);
         float nza = getIntent().getFloatExtra("nza", 0);
@@ -34,25 +39,40 @@ public class BarycentricResultActivity extends AppCompatActivity {
         float nyc = getIntent().getFloatExtra("nyc", 0);
         float nzc = getIntent().getFloatExtra("nzc", 0);
 
-        // Hiển thị nội dung nhận được từ Intent
-        String result = "Xa: " + xa + "\n" +
-                "Ya: " + ya + "\n" +
-                "Za: " + za + "\n" +
-                "Xb: " + xb + "\n" +
-                "Yb: " + yb + "\n" +
-                "Zb: " + zb + "\n" +
-                "Xc: " + xc + "\n" +
-                "Yc: " + yc + "\n" +
-                "Zc: " + zc + "\n" +
-                "Nxa: " + nxa + "\n" +
-                "Nya: " + nya + "\n" +
-                "Nza: " + nza + "\n" +
-                "Nxb: " + nxb + "\n" +
-                "Nyb: " + nyb + "\n" +
-                "Nzb: " + nzb + "\n" +
-                "Nxc: " + nxc + "\n" +
-                "Nyc: " + nyc + "\n" +
-                "Nzc: " + nzc;
-        textViewResult.setText(result);
+        float[] pointA = new float[]{xa,ya,za};
+        float[] pointB = new float[]{xb,yb,zb};
+        float[] pointC = new float[]{xc,yc,zc};
+        float[] pointP = new float[]{xp,yp,zp};
+        float[] normalA = new float[]{nxa,nya,nza};
+        float[] normalB = new float[]{nxb,nyb,nzb};
+        float[] normalC = new float[]{nxc,nyc,nzc};
+
+        final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+        final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
+
+        if (supportsEs2)
+        {
+            mGLSurfaceView.setEGLContextClientVersion(2);
+            mGLSurfaceView.setRenderer(new BarycentricRender(pointA, pointB, pointC, pointP, normalA, normalB, normalC));
+        }
+        else
+        {
+            return;
+        }
+
+        setContentView(mGLSurfaceView);
+    }
+    protected void onResume()
+    {
+        super.onResume();
+        mGLSurfaceView.onResume();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        mGLSurfaceView.onPause();
     }
 }

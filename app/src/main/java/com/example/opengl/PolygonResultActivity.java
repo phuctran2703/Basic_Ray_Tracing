@@ -15,7 +15,7 @@ public class PolygonResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mGLSurfaceView = new GLSurfaceView(this);
 
-        // Nhận dữ liệu từ Intent
+        // Get data from Intent
         float x0 = getIntent().getFloatExtra("x0", 0);
         float y0 = getIntent().getFloatExtra("y0", 0);
         float z0 = getIntent().getFloatExtra("z0", 0);
@@ -38,18 +38,13 @@ public class PolygonResultActivity extends AppCompatActivity {
         float[] vertex2 = new float[]{xb,yb,zb};
         float[] vertex3 = new float[]{xc,yc,zc};
 
-
-
         final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
         final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
 
         if (supportsEs2)
         {
-            // Request an OpenGL ES 2.0 compatible context.
             mGLSurfaceView.setEGLContextClientVersion(2);
-
-            // Set the renderer to our demo renderer, defined below.
             mGLSurfaceView.setRenderer(new SurfaceRender(vertex1, vertex2, vertex3, rayPosition, rayDirection));
         }
         else
@@ -62,7 +57,6 @@ public class PolygonResultActivity extends AppCompatActivity {
     @Override
     protected void onResume()
     {
-        // The activity must call the GL surface view's onResume() on activity onResume().
         super.onResume();
         mGLSurfaceView.onResume();
     }
@@ -70,7 +64,6 @@ public class PolygonResultActivity extends AppCompatActivity {
     @Override
     protected void onPause()
     {
-        // The activity must call the GL surface view's onPause() on activity onPause().
         super.onPause();
         mGLSurfaceView.onPause();
     }
