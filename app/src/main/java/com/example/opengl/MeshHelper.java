@@ -53,7 +53,6 @@ class SphereMeshHelper extends MeshHelper {
         }
         return intersectionPoints;
     }
-
     public boolean isInsideSphere(float[] p) {
         float distance = 0.0f;
         for (int i = 0; i < 3; i++) {
@@ -88,11 +87,12 @@ class PlaneMeshHelper extends MeshHelper {
 
         float dotProduct = rayDirection[0] * normal[0] + rayDirection[1] * normal[1] + rayDirection[2] * normal[2];
 
-        if (Math.abs(dotProduct) < 1e-6) return null;
 
         float distance = (normal[0] * (a[0] - rayPosition[0]) +
                 normal[1] * (a[1] - rayPosition[1]) +
                 normal[2] * (a[2] - rayPosition[2])) / dotProduct;
+
+        if (Math.abs(dotProduct) < 1e-6) return null;
 
         if (distance < 0) return null;
 
@@ -146,5 +146,66 @@ class PlaneMeshHelper extends MeshHelper {
         float[] cross = crossProduct(a, b);
         float magnitude = (float) Math.sqrt(dotProduct(cross, cross));
         return magnitude / 2.0f;
+    }
+
+    private boolean checkPointInPolygon(float[] point, float[] o, float[] normal){
+        float[] vector = new float[]{o[0]-point[0], o[1]-point[1], o[2]-point[2]};
+        if(dotProduct(vector, normal) == 0) return true;
+        return false;
+    }
+
+    private float[] findVectorIntersection(float[] o1, float[] v1, float[] o2, float[] v2){
+        float determinant = v1[0]*v2[1] - v2[0]*v1[1];
+
+        if (determinant != 0){
+            float t1 = (v1[1]*(o2[0]-o1[0]) - v1[0]*(o2[1]-o1[1]))/determinant;
+            float t2 = (v1[1]*(o2[0]-o1[0]) - v1[0]*(o2[1]-o1[1]))/determinant;
+
+            if (t1<0 || t2<0 || t2>1) return null;
+
+            float x = o2[0] + t2*v2[0];
+            float y = o2[1] + t2*v2[1];
+            float z = o2[2] + t2*v2[2];
+
+            if(z != o1[2] + t1*v1[2]) return null;
+
+            return new float[]{x,y,z};
+        }
+        boolean checkA = false;
+        boolean checkB = false;
+        boolean checkO = false;
+
+        float t00;
+        float t01;
+        float t02;
+
+        // Check A in ray direction
+        t00 = (o2[0]-o1[0])/v1[0];
+        t01 = (o2[1]-o1[1])/v1[1];
+        t02 = (o2[2]-o1[2])/v1[2];
+
+        if(t00 == t01 && t01==t02 && t00>=0) checkA = true;
+
+        // Check B in ray direction
+        t00 = (o2[0]+v2[0]-o1[0])/v1[0];
+        t01 = (o2[1]+v2[1]-o1[1])/v1[1];
+        t02 = (o2[2]+v2[2]-o1[2])/v1[2];
+
+        if(t00 == t01 && t01==t02 && t00>=0) checkB = true;
+
+        // Check O in AB
+        t00 = (o1[0]-o2[0])/v2[0];
+        t01 = (o1[1]-o2[1])/v2[1];
+        t02 = (o1[2]-o2[2])/v2[2];
+
+        if(t00 == t01 && t01==t02 && t00>=0 && t00<=1) checkO = true;
+
+        if(checkA && checkB) return new float[]{o2[0],o2[1],o2[2],o2[0]+v2[0],o2[1]+v2[1],o2[2]+v2[2]};
+
+        if(checkA && checkO) return new float[]{o2[0],o2[1],o2[2],o1[0],o1[1],o1[2]};
+
+        if(checkB && checkO) return new float[]{o2[0]+v2[0],o2[1]+v2[1],o2[2]+v2[2],o1[0],o1[1],o1[2]};
+
+        return null;
     }
 }

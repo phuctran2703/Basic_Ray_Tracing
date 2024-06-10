@@ -68,10 +68,6 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
                 pointC[0], pointC[1], pointC[2]
         };
 
-        for (int i = 0; i < 3; i++) {
-            center[i] = (pointA[i] + pointB[i] + pointC[i]) / 3.0f;
-        }
-
         mVertexBuffer = ByteBuffer.allocateDirect(vertexAttributeArray.length * mBytesPerFloat)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
@@ -236,7 +232,7 @@ public class SurfaceRender implements GLSurfaceView.Renderer {
     private void drawVertices() {
         GLES30.glUseProgram(mProgramHandle);
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, mVBOHandles[0]);
-        GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, mPositionDataSize * mBytesPerFloat, 0);
+        GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, 0, 0);
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 
         GLES30.glUniform1f(mPointSizeHandle, 5.0f);
