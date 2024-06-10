@@ -155,11 +155,13 @@ class PlaneMeshHelper extends MeshHelper {
     }
 
     private float[] findVectorIntersection(float[] o1, float[] v1, float[] o2, float[] v2){
-        float determinant = v1[0]*v2[1] - v2[0]*v1[1];
+        float det = det2(v1[0], -v2[0], v1[1]+v1[2], -v2[1]-v2[2]);
+        float detX = det2(o2[0]-o1[0], -v2[0], o2[1]+o2[2] - (o1[1]+o1[2]), -v2[1]-v2[2]);
+        float detY = det2(v1[0], o2[0]-o1[0], v1[1]+v1[2], o2[1]+o2[2] - (o1[1]+o1[2]));
 
-        if (determinant != 0){
-            float t1 = (v1[1]*(o2[0]-o1[0]) - v1[0]*(o2[1]-o1[1]))/determinant;
-            float t2 = (v1[1]*(o2[0]-o1[0]) - v1[0]*(o2[1]-o1[1]))/determinant;
+        if(det != 0){
+            float t1 = detX/det;
+            float t2 = detY/det;
 
             if (t1<0 || t2<0 || t2>1) return null;
 
@@ -171,41 +173,38 @@ class PlaneMeshHelper extends MeshHelper {
 
             return new float[]{x,y,z};
         }
-        boolean checkA = false;
-        boolean checkB = false;
-        boolean checkO = false;
+        else{
+            if(detX != 0 || detY != 0) return null;
+            boolean checkA = false;
+            boolean checkB = false;
+            boolean checkO = false;
 
-        float t00;
-        float t01;
-        float t02;
+            float t;
 
-        // Check A in ray direction
-        t00 = (o2[0]-o1[0])/v1[0];
-        t01 = (o2[1]-o1[1])/v1[1];
-        t02 = (o2[2]-o1[2])/v1[2];
+            // Check A in ray direction
+            t = ((o2[0]+o2[1]+o2[2])-(o1[0]+o1[1]+o1[2]))/(v1[0]+v1[1]+v1[2]);
 
-        if(t00 == t01 && t01==t02 && t00>=0) checkA = true;
+            if(o1[0] + t*v1[0] == o2[0] && o1[1] + t*v1[1] == o2[1] && o1[2] + t*v1[2] == o2[2] && t>=0) checkA = true;
 
-        // Check B in ray direction
-        t00 = (o2[0]+v2[0]-o1[0])/v1[0];
-        t01 = (o2[1]+v2[1]-o1[1])/v1[1];
-        t02 = (o2[2]+v2[2]-o1[2])/v1[2];
+            // Check B in ray direction
+            t = ((o2[0]+v2[0]+o2[1]+v2[1]+o2[2]+v2[2])-(o1[0]+o1[1]+o1[2]))/(v1[0]+v1[1]+v1[2]);
 
-        if(t00 == t01 && t01==t02 && t00>=0) checkB = true;
+            if(o1[0] + t*v1[0] == o2[0]+v2[0] && o1[1] + t*v1[1] == o2[1]+v2[1] && o1[2] + t*v1[2] == o2[2]+v2[2] && t>=0) checkB = true;
 
-        // Check O in AB
-        t00 = (o1[0]-o2[0])/v2[0];
-        t01 = (o1[1]-o2[1])/v2[1];
-        t02 = (o1[2]-o2[2])/v2[2];
+            // Check O in AB
+            t= ((o1[0]+o1[1]+o1[2])-(o2[0]+o2[1]+o2[2]))/(v2[0]+v2[1]+v2[2]);
 
-        if(t00 == t01 && t01==t02 && t00>=0 && t00<=1) checkO = true;
+            if(o2[0] + t*v2[0] == o1[0] && o2[1] + t*v2[1] == o1[1] && o2[2] + t*v2[2] == o1[2] && t>=0 && t<=1) checkO = true;
 
-        if(checkA && checkB) return new float[]{o2[0],o2[1],o2[2],o2[0]+v2[0],o2[1]+v2[1],o2[2]+v2[2]};
+            if(checkA && checkB) return new float[]{o2[0],o2[1],o2[2],o2[0]+v2[0],o2[1]+v2[1],o2[2]+v2[2]};
 
-        if(checkA && checkO) return new float[]{o2[0],o2[1],o2[2],o1[0],o1[1],o1[2]};
+            if(checkA && checkO) return new float[]{o2[0],o2[1],o2[2],o1[0],o1[1],o1[2]};
 
-        if(checkB && checkO) return new float[]{o2[0]+v2[0],o2[1]+v2[1],o2[2]+v2[2],o1[0],o1[1],o1[2]};
-
+            if(checkB && checkO) return new float[]{o2[0]+v2[0],o2[1]+v2[1],o2[2]+v2[2],o1[0],o1[1],o1[2]};
+        }
         return null;
+    }
+    private float det2(float a00, float a01, float a10, float a11){
+        return a00*a11 - a01*a10;
     }
 }
