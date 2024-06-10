@@ -124,8 +124,9 @@ class PlaneMeshHelper extends MeshHelper {
     public boolean isInsideTriangle(float[] p) {
         if (intersectionPoint == null) return false;
         float[] barycentricCoordinates = getBarycentricCoordinates(p);
-        Log.d("MeshHelper", "barycentricCoordinates: " + barycentricCoordinates[0] + ", " + barycentricCoordinates[1] + ", " + barycentricCoordinates[2]);
-        return barycentricCoordinates[0] <= 1 && barycentricCoordinates[1] <= 1 && barycentricCoordinates[2] <= 1 &&
+
+        return barycentricCoordinates[0] >= 0 && barycentricCoordinates[1] >= 0 && barycentricCoordinates[2] >= 0 &&
+                barycentricCoordinates[0] <= 1 && barycentricCoordinates[1] <= 1 && barycentricCoordinates[2] <= 1 &&
                 (barycentricCoordinates[0] + barycentricCoordinates[1] + barycentricCoordinates[2]- 1.0f < 1e-6);
     }
 

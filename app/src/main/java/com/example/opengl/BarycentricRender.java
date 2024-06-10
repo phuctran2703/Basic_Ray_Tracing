@@ -132,15 +132,16 @@ public class BarycentricRender implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
         GLES30.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
-        GLES30.glEnable(GLES30.GL_CULL_FACE);
+        // GLES30.glEnable(GLES30.GL_CULL_FACE);
         GLES30.glEnable(GLES30.GL_DEPTH_TEST);
 
         final float eyeX = this.center[0];
         final float eyeY = this.center[1];
-        final float eyeZ = this.center[2] - 5.0f;
+        final float eyeZ = this.center[2] + 5.0f;
+
         final float lookX = this.center[0];
         final float lookY = this.center[1];
-        final float lookZ = this.center[2] + 5.0f;
+        final float lookZ = this.center[2] - 5.0f;
 
         final float upX = 0.0f;
         final float upY = 1.0f;
@@ -199,7 +200,7 @@ public class BarycentricRender implements GLSurfaceView.Renderer {
         final float bottom = -1.0f;
         final float top = 1.0f;
         final float near = 1.0f;
-        final float far = 10.0f;
+        final float far = 15.0f;
 
         Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
 
@@ -227,8 +228,8 @@ public class BarycentricRender implements GLSurfaceView.Renderer {
         GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, mPositionDataSize * mBytesPerFloat, 0);
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 
-        GLES30.glUniform4f(mColorHandle, mColor[0], mColor[1], mColor[2], mColor[3]);
-        GLES30.glUniform1f(mPointSizeHandle, 10.0f);
+        GLES30.glUniform1f(mPointSizeHandle, 5.0f);
+        GLES30.glUniform4f(mColorHandle, 0.5f, 0.5f, 0.0f, 1.0f);
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);
 
         GLES30.glDisableVertexAttribArray(mPositionHandle);
@@ -240,6 +241,7 @@ public class BarycentricRender implements GLSurfaceView.Renderer {
         GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, mPositionDataSize * mBytesPerFloat, 0);
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 
+        GLES30.glUniform1f(mPointSizeHandle, 1.0f);
         GLES30.glUniform4f(mColorHandle, 1.0f, 0.0f, 0.0f, 1.0f);
         GLES30.glDrawArrays(GLES30.GL_LINES, 0, 8);
 
