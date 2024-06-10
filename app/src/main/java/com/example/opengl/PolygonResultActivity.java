@@ -45,7 +45,7 @@ public class PolygonResultActivity extends AppCompatActivity {
         if (supportsEs2)
         {
             mGLSurfaceView.setEGLContextClientVersion(2);
-            mGLSurfaceView.setRenderer(new SurfaceRender(vertex1, vertex2, vertex3, rayPosition, rayDirection));
+            mGLSurfaceView.setRenderer(new PlaneRender(vertex1, vertex2, vertex3, rayPosition, rayDirection));
         }
         else
         {

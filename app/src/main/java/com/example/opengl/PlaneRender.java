@@ -10,7 +10,7 @@ import java.nio.ByteOrder;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class SurfaceRender extends MeshRender {
+public class PlaneRender extends MeshRender {
     private final PlaneMeshHelper helper;
     private float[] center = new float[3];
     private final float[] rayPosition;
@@ -18,7 +18,7 @@ public class SurfaceRender extends MeshRender {
 
     private boolean isInsideTriangle;
 
-    public SurfaceRender(float[] pointA, float[] pointB, float[] pointC, float[] rayPosition, float[] rayDirection) {
+    public PlaneRender(float[] pointA, float[] pointB, float[] pointC, float[] rayPosition, float[] rayDirection) {
         super(new float[]{pointA[0], pointA[1], pointA[2], pointB[0], pointB[1], pointB[2], pointC[0], pointC[1], pointC[2]});
 
         this.rayPosition = rayPosition;

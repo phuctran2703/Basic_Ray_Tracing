@@ -80,6 +80,10 @@ public class PolygonActivity extends AppCompatActivity {
                 intent.putExtra("xc", xc);
                 intent.putExtra("yc", yc);
                 intent.putExtra("zc", zc);
+
+//                Tester tester = new Tester();
+//                intent = tester.getTestcasePolygon(intent, 5);
+
                 startActivity(intent);
             }
         });
