@@ -204,7 +204,6 @@ class PlaneMeshHelper extends MeshHelper {
         float[] intersectionAB = findVectorIntersection(rayPosition, rayDirection, a, ab);
         float[] intersectionBC = findVectorIntersection(rayPosition, rayDirection, b, bc);
         float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, c, ac);
-        if (intersectionAB == null && intersectionBC == null && intersectionAC == null) return null;
 
         if (intersectionAB != null && intersectionAB.length == 2) return intersectionAB;
         if (intersectionBC != null && intersectionBC.length == 2) return intersectionBC;
@@ -216,8 +215,9 @@ class PlaneMeshHelper extends MeshHelper {
                 return finalIntersection;
             } else if (intersectionAC != null) {
                 return intersectionAC;
+            } else if (intersectionBC != null) {
+                return intersectionBC;
             }
-            return intersectionBC;
         }
 
         if (intersectionBC == null){
@@ -227,8 +227,9 @@ class PlaneMeshHelper extends MeshHelper {
             }
             else if (intersectionAC != null){
                 return intersectionAC;
+            } else if (intersectionAB != null) {
+                return intersectionAB;
             }
-            return intersectionAB;
         }
 
         if (intersectionAC == null){
@@ -238,8 +239,9 @@ class PlaneMeshHelper extends MeshHelper {
             }
             else if (intersectionBC != null){
                 return intersectionBC;
+            } else if (intersectionAB != null) {
+                return intersectionAB;
             }
-            return intersectionAB;
         }
 
         return null;
