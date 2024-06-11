@@ -121,8 +121,12 @@ public class PlaneRender extends MeshRender {
             float[] intersectionPoints = this.helper.getTriangleIntersection();
             if (intersectionPoints == null) return;
             else{
-                for (int i = 0; i < 3; i++) {
-                    Log.d("IntersectionPoint", intersectionPoints[i] + "");
+                if (intersectionPoints.length == 3){
+                    Log.d("IntersectionPoints", intersectionPoints[0] + " " + intersectionPoints[1] + " " + intersectionPoints[2]);
+                }
+                else{
+                    Log.d("IntersectionPoints", intersectionPoints[0] + " " + intersectionPoints[1] + " " + intersectionPoints[2]);
+                    Log.d("IntersectionPoints", intersectionPoints[3] + " " + intersectionPoints[4] + " " + intersectionPoints[5]);
                 }
                 mPointBuffer = ByteBuffer.allocateDirect(intersectionPoints.length * mBytesPerFloat)
                         .order(ByteOrder.nativeOrder())

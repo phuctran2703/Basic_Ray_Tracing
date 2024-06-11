@@ -205,13 +205,14 @@ class PlaneMeshHelper extends MeshHelper {
         float[] intersectionBC = findVectorIntersection(rayPosition, rayDirection, b, bc);
         float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, a, ac);
 
+        Log.d("intersectionABLength", intersectionAB.length+"");
+        Log.d("intersectionBCLength", intersectionBC.length+"");
+        Log.d("intersectionACLength", intersectionAC.length+"");
+
         if (intersectionAB != null && intersectionAB.length == 6) return intersectionAB;
         if (intersectionBC != null && intersectionBC.length == 6) return intersectionBC;
         if (intersectionAC != null && intersectionAC.length == 6) return intersectionAC;
 
-        Log.d("intersectionABLength", intersectionAB.length+"");
-        Log.d("intersectionBCLength", intersectionBC.length+"");
-        Log.d("intersectionACLength", intersectionAC.length+"");
 
         if(intersectionBC != null && intersectionAC != null) {
             if (intersectionBC[0] != intersectionAC[0] || intersectionBC[1] != intersectionAC[1] || intersectionBC[2] != intersectionAC[2]) {
