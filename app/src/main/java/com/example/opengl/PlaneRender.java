@@ -1,5 +1,6 @@
 package com.example.opengl;
 
+import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.Matrix;
 import android.util.Log;
@@ -25,12 +26,6 @@ public class PlaneRender extends MeshRender {
 
         this.rayPosition = rayPosition;
         this.rayDirection = rayDirection;
-
-        Log.d("PointA", pointA[0] + " " + pointA[1] + " " + pointA[2]);
-        Log.d("PointB", pointB[0] + " " + pointB[1] + " " + pointB[2]);
-        Log.d("PointC", pointC[0] + " " + pointC[1] + " " + pointC[2]);
-        Log.d("RayPosition", rayPosition[0] + " " + rayPosition[1] + " " + rayPosition[2]);
-        Log.d("RayDirection", rayDirection[0] + " " + rayDirection[1] + " " + rayDirection[2]);
 
         for (int i = 0; i < 3; i++) {
             this.center[i] = (pointA[i] + pointB[i] + pointC[i]) / 3.0f;
@@ -65,7 +60,6 @@ public class PlaneRender extends MeshRender {
         }
 
         isInsideTriangle = this.helper.isInsideTriangle(intersectionPoints);
-        Log.d("IsInsideTriangle", isInsideTriangle + "");
 
         mPointBuffer = ByteBuffer.allocateDirect(intersectionPoints.length * mBytesPerFloat)
                 .order(ByteOrder.nativeOrder())
@@ -103,13 +97,14 @@ public class PlaneRender extends MeshRender {
     public void onDrawFrame(GL10 glUnused) {
         super.onDrawFrame(glUnused);
 
+        drawPoints(10.0f);
+
         if (inPlane) {
-            super.drawRay(10.0f, Color.BLUE, Color.RED);
+            super.drawRay(10.0f, Color.WHITE, Color.RED);
         }
         else {
-            super.drawRay(10.0f, Color.BLUE, Color.BLACK);
+            super.drawRay(10.0f, Color.WHITE, Color.WHITE);
         }
-        drawPoints(10.0f);
 
         super.drawMesh(Color.YELLOW);
     }
@@ -121,13 +116,6 @@ public class PlaneRender extends MeshRender {
             float[] intersectionPoints = this.helper.getTriangleIntersection();
             if (intersectionPoints == null) return;
             else{
-                if (intersectionPoints.length == 3){
-                    Log.d("IntersectionPoints", intersectionPoints[0] + " " + intersectionPoints[1] + " " + intersectionPoints[2]);
-                }
-                else{
-                    Log.d("IntersectionPoints", intersectionPoints[0] + " " + intersectionPoints[1] + " " + intersectionPoints[2]);
-                    Log.d("IntersectionPoints", intersectionPoints[3] + " " + intersectionPoints[4] + " " + intersectionPoints[5]);
-                }
                 mPointBuffer = ByteBuffer.allocateDirect(intersectionPoints.length * mBytesPerFloat)
                         .order(ByteOrder.nativeOrder())
                         .asFloatBuffer();
@@ -139,8 +127,14 @@ public class PlaneRender extends MeshRender {
 
             GLES30.glUniform4fv(mColorHandle, 0, Color.GREEN, 0);
 
-            if (intersectionPoints.length == 1) GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
-            else GLES30.glDrawArrays(GLES30.GL_LINES, 0, 2);
+            if (intersectionPoints.length == 3){
+                GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
+            }
+            else if (intersectionPoints.length == 6){
+                GLES30.glEnable(GLES20.GL_FRONT);
+                GLES30.glDrawArrays(GLES30.GL_LINES, 0, mPointBuffer.capacity() / mPositionDataSize);
+                GLES30.glDisable(GLES20.GL_FRONT);
+            }
         }
         else {
             super.drawPoints(pointSize);

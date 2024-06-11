@@ -205,10 +205,6 @@ class PlaneMeshHelper extends MeshHelper {
         float[] intersectionBC = findVectorIntersection(rayPosition, rayDirection, b, bc);
         float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, a, ac);
 
-        Log.d("intersectionABLength", intersectionAB.length+"");
-        Log.d("intersectionBCLength", intersectionBC.length+"");
-        Log.d("intersectionACLength", intersectionAC.length+"");
-
         if (intersectionAB != null && intersectionAB.length == 6) return intersectionAB;
         if (intersectionBC != null && intersectionBC.length == 6) return intersectionBC;
         if (intersectionAC != null && intersectionAC.length == 6) return intersectionAC;
@@ -260,8 +256,6 @@ class PlaneMeshHelper extends MeshHelper {
     }
 
     private boolean checkPointInPlane(float[] point) {
-        Log.d("normal11", this.normal[0] + " " + this.normal[1] + " " + this.normal[2]);
-        Log.d("normal11", point[0] + " " + point[1] + " " + point[2]);
         float[] vector = new float[]{this.a[0] - point[0], this.a[1] - point[1], this.a[2] - point[2]};
         if (Math.abs(dotProduct(vector, this.normal)) < 1e-6) return true;
         return false;
@@ -269,7 +263,6 @@ class PlaneMeshHelper extends MeshHelper {
 
     public boolean checkRayInPlane(){
         float[] rayPoint = new float[]{rayPosition[0] + rayDirection[0], rayPosition[1] + rayDirection[1], rayPosition[2] + rayDirection[2]};
-        Log.d("normal11", this.normal[0] + " " + this.normal[1] + " " + this.normal[2]);
         return checkPointInPlane(rayPoint) && checkPointInPlane(rayPosition);
     }
 
