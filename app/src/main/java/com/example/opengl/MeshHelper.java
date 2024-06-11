@@ -203,54 +203,60 @@ class PlaneMeshHelper extends MeshHelper {
     public float[] getTriangleIntersection(){
         float[] intersectionAB = findVectorIntersection(rayPosition, rayDirection, a, ab);
         float[] intersectionBC = findVectorIntersection(rayPosition, rayDirection, b, bc);
-        float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, c, ac);
+        float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, a, ac);
+        Log.d("222222222", ""+intersectionAB.length);
 
-        if (intersectionAB != null && intersectionAB.length == 2) return intersectionAB;
-        if (intersectionBC != null && intersectionBC.length == 2) return intersectionBC;
-        if (intersectionAC != null && intersectionAC.length == 2) return intersectionAC;
+        if (intersectionAB != null && intersectionAB.length == 6) {
+            return intersectionAB;
+        }
+        if (intersectionBC != null && intersectionBC.length == 6) return intersectionBC;
+        if (intersectionAC != null && intersectionAC.length == 6) return intersectionAC;
 
-        if(intersectionAB == null){
-            if(intersectionBC != null && intersectionAC != null) {
-                float[] finalIntersection = new float[]{intersectionBC[0], intersectionBC[1], intersectionBC[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
-                return finalIntersection;
-            } else if (intersectionAC != null) {
-                return intersectionAC;
-            } else if (intersectionBC != null) {
-                return intersectionBC;
-            }
+        if(intersectionBC != null && intersectionAC != null) {
+            float[] finalIntersection = new float[]{intersectionBC[0], intersectionBC[1], intersectionBC[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+            return finalIntersection;
+        } else if (intersectionAC != null) {
+            return intersectionAC;
+        } else if (intersectionBC != null) {
+            return intersectionBC;
         }
 
-        if (intersectionBC == null){
-            if (intersectionAB != null && intersectionAC != null){
-                float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
-                return finalIntersection;
-            }
-            else if (intersectionAC != null){
-                return intersectionAC;
-            } else if (intersectionAB != null) {
-                return intersectionAB;
-            }
+
+        if (intersectionAB != null && intersectionAC != null){
+            float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+            return finalIntersection;
+        }
+        else if (intersectionAC != null){
+            return intersectionAC;
+        } else if (intersectionAB != null) {
+            return intersectionAB;
         }
 
-        if (intersectionAC == null){
-            if (intersectionAB != null && intersectionBC != null){
-                float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionBC[0], intersectionBC[1], intersectionBC[2]};
-                return finalIntersection;
-            }
-            else if (intersectionBC != null){
-                return intersectionBC;
-            } else if (intersectionAB != null) {
-                return intersectionAB;
-            }
+        if (intersectionAB != null && intersectionBC != null){
+            float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionBC[0], intersectionBC[1], intersectionBC[2]};
+            return finalIntersection;
+        }
+        else if (intersectionBC != null){
+            return intersectionBC;
+        } else if (intersectionAB != null) {
+            return intersectionAB;
         }
 
         return null;
     }
 
-    public boolean checkPointInPlane(float[] point) {
+    private boolean checkPointInPlane(float[] point) {
+        Log.d("normal11", this.normal[0] + " " + this.normal[1] + " " + this.normal[2]);
+        Log.d("normal11", point[0] + " " + point[1] + " " + point[2]);
         float[] vector = new float[]{this.a[0] - point[0], this.a[1] - point[1], this.a[2] - point[2]};
         if (Math.abs(dotProduct(vector, this.normal)) < 1e-6) return true;
         return false;
+    }
+
+    public boolean checkRayInPlane(){
+        float[] rayPoint = new float[]{rayPosition[0] + rayDirection[0], rayPosition[1] + rayDirection[1], rayPosition[2] + rayDirection[2]};
+        Log.d("normal11", this.normal[0] + " " + this.normal[1] + " " + this.normal[2]);
+        return checkPointInPlane(rayPoint) && checkPointInPlane(rayPosition);
     }
 
     private float[] findVectorIntersection(float[] raySource, float[] rayDirection, float[] point, float[] direction) {
@@ -273,6 +279,7 @@ class PlaneMeshHelper extends MeshHelper {
             return new float[]{x, y, z};
         } else {
             if (detX != 0 || detY != 0) return null;
+
             boolean checkA = false;
             boolean checkB = false;
             boolean checkO = false;
@@ -297,9 +304,11 @@ class PlaneMeshHelper extends MeshHelper {
             if (point[0] + t * direction[0] == raySource[0] && point[1] + t * direction[1] == raySource[1] && point[2] + t * direction[2] == raySource[2] && t >= 0 && t <= 1)
                 checkO = true;
 
-            if (checkA && checkB)
-                return new float[]{point[0], point[1], point[2], point[0] + direction[0], point[1] + direction[1], point[2] + direction[2]};
 
+
+            if (checkA && checkB) {
+                return new float[]{point[0], point[1], point[2], point[0] + direction[0], point[1] + direction[1], point[2] + direction[2]};
+            }
             if (checkA && checkO) return new float[]{point[0], point[1], point[2], raySource[0], raySource[1], raySource[2]};
 
             if (checkB && checkO)
