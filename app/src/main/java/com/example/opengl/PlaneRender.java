@@ -1,6 +1,6 @@
 package com.example.opengl;
 
-import android.opengl.GLES20;
+import android.opengl.GLES30;
 import android.opengl.GLES30;
 import android.opengl.Matrix;
 import android.util.Log;
@@ -125,15 +125,15 @@ public class PlaneRender extends MeshRender {
                 super.drawPoints(pointSize);
             }
 
-            GLES30.glUniform4fv(mColorHandle, 0, Color.GREEN, 0);
+            GLES30.glUniform4fv(mColorHandle, 1, Color.GREEN, 0);
 
             if (intersectionPoints.length == 3){
                 GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
             }
             else if (intersectionPoints.length == 6){
-                GLES30.glEnable(GLES20.GL_FRONT);
+                GLES30.glEnable(GLES30.GL_FRONT);
                 GLES30.glDrawArrays(GLES30.GL_LINES, 0, mPointBuffer.capacity() / mPositionDataSize);
-                GLES30.glDisable(GLES20.GL_FRONT);
+                GLES30.glDisable(GLES30.GL_FRONT);
             }
         }
         else {
