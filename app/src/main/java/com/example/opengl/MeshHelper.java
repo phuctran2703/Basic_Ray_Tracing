@@ -251,6 +251,10 @@ class PlaneMeshHelper extends MeshHelper {
             }
         }
 
+        if (intersectionAB != null) return intersectionAB;
+        if (intersectionBC != null) return intersectionBC;
+        if (intersectionAC != null) return intersectionAC;
+
         return null;
     }
 
