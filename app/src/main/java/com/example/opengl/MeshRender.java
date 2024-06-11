@@ -168,7 +168,7 @@ public abstract class MeshRender implements GLSurfaceView.Renderer {
         GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, mPositionDataSize * mBytesPerFloat, 0);
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 
-        GLES30.glUniform4fv(mColorHandle, 0, meshColor, 0);
+        GLES30.glUniform4fv(mColorHandle, 1, meshColor, 0);
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, numPoints);
 
         GLES30.glDisableVertexAttribArray(mPositionHandle);
@@ -182,10 +182,10 @@ public abstract class MeshRender implements GLSurfaceView.Renderer {
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 
         GLES30.glUniform1f(mPointSizeHandle, sourcePointSize);
-        GLES30.glUniform4fv(mColorHandle, 0, sourcePointColor, 0);
+        GLES30.glUniform4fv(mColorHandle, 1, sourcePointColor, 0);
         GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
 
-        GLES30.glUniform4fv(mColorHandle, 0, rayColor, 0);
+        GLES30.glUniform4fv(mColorHandle, 1, rayColor, 0);
         GLES30.glDrawArrays(GLES30.GL_LINES, 0, mRayBuffer.capacity() / mPositionDataSize);
 
         GLES30.glDisableVertexAttribArray(mPositionHandle);
