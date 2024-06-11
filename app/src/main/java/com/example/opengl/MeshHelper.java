@@ -204,42 +204,51 @@ class PlaneMeshHelper extends MeshHelper {
         float[] intersectionAB = findVectorIntersection(rayPosition, rayDirection, a, ab);
         float[] intersectionBC = findVectorIntersection(rayPosition, rayDirection, b, bc);
         float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, a, ac);
-        Log.d("222222222", ""+intersectionAB.length);
 
-        if (intersectionAB != null && intersectionAB.length == 6) {
-            return intersectionAB;
-        }
+        if (intersectionAB != null && intersectionAB.length == 6) return intersectionAB;
         if (intersectionBC != null && intersectionBC.length == 6) return intersectionBC;
         if (intersectionAC != null && intersectionAC.length == 6) return intersectionAC;
 
+        Log.d("intersectionABLength", intersectionAB.length+"");
+        Log.d("intersectionBCLength", intersectionBC.length+"");
+        Log.d("intersectionACLength", intersectionAC.length+"");
+
         if(intersectionBC != null && intersectionAC != null) {
-            float[] finalIntersection = new float[]{intersectionBC[0], intersectionBC[1], intersectionBC[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
-            return finalIntersection;
-        } else if (intersectionAC != null) {
-            return intersectionAC;
-        } else if (intersectionBC != null) {
-            return intersectionBC;
+            if (intersectionBC[0] != intersectionAC[0] || intersectionBC[1] != intersectionAC[1] || intersectionBC[2] != intersectionAC[2]) {
+                float[] finalIntersection = new float[]{intersectionBC[0], intersectionBC[1], intersectionBC[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+                return finalIntersection;
+            } else {
+                if (intersectionAB != null) {
+                    float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+                    return finalIntersection;
+                }
+            }
         }
 
 
-        if (intersectionAB != null && intersectionAC != null){
-            float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
-            return finalIntersection;
-        }
-        else if (intersectionAC != null){
-            return intersectionAC;
-        } else if (intersectionAB != null) {
-            return intersectionAB;
+        if (intersectionAB != null && intersectionAC != null) {
+            if (intersectionAB[0] != intersectionAC[0] || intersectionAB[1] != intersectionAC[1] || intersectionAB[2] != intersectionAC[2]) {
+                float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+                return finalIntersection;
+            } else {
+                if (intersectionBC != null) {
+                    float[] finalIntersection = new float[]{intersectionBC[0], intersectionBC[1], intersectionBC[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+                    return finalIntersection;
+                }
+            }
         }
 
         if (intersectionAB != null && intersectionBC != null){
-            float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionBC[0], intersectionBC[1], intersectionBC[2]};
-            return finalIntersection;
-        }
-        else if (intersectionBC != null){
-            return intersectionBC;
-        } else if (intersectionAB != null) {
-            return intersectionAB;
+            if (intersectionAB[0] != intersectionBC[0] || intersectionAB[1] != intersectionBC[1] || intersectionAB[2] != intersectionBC[2]) {
+                float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionBC[0], intersectionBC[1], intersectionBC[2]};
+                return finalIntersection;
+            }
+            else{
+                if (intersectionAC != null) {
+                    float[] finalIntersection = new float[]{intersectionAC[0], intersectionAC[1], intersectionAC[2], intersectionBC[0], intersectionBC[1], intersectionBC[2]};
+                    return finalIntersection;
+                }
+            }
         }
 
         return null;
