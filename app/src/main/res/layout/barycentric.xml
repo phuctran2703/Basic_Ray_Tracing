@@ -13,8 +13,9 @@
 
         <!-- Triangle Vertices -->
         <TextView
+            android:id="@+id/textViewVertexA"
             style="@style/SectionTitle"
-            android:text="Triangle Vertex A [xa, ya, za]" />
+            android:text="Vertex A" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,28 +25,26 @@
             <EditText
                 android:id="@+id/editTextXa"
                 style="@style/InputField"
-                android:hint="xa"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextYa"
                 style="@style/InputField"
-                android:hint="ya"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextZa"
                 style="@style/InputField"
-                android:hint="za"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewVertexB"
             style="@style/SectionTitle"
-            android:text="Triangle Vertex B [xb, yb, zb]" />
+            android:text="Vertex B" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,28 +54,26 @@
             <EditText
                 android:id="@+id/editTextXb"
                 style="@style/InputField"
-                android:hint="xb"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextYb"
                 style="@style/InputField"
-                android:hint="yb"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextZb"
                 style="@style/InputField"
-                android:hint="zb"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewVertexC"
             style="@style/SectionTitle"
-            android:text="Triangle Vertex C [xc, yc, zc]" />
+            android:text="Vertex C" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,28 +83,26 @@
             <EditText
                 android:id="@+id/editTextXc"
                 style="@style/InputField"
-                android:hint="xc"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextYc"
                 style="@style/InputField"
-                android:hint="yc"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextZc"
                 style="@style/InputField"
-                android:hint="zc"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewPointP"
             style="@style/SectionTitle"
-            android:text="Point on Triangle P [xp, yp, zp]" />
+            android:text="Point P" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,29 +112,27 @@
             <EditText
                 android:id="@+id/editTextXp"
                 style="@style/InputField"
-                android:hint="xp"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextYp"
                 style="@style/InputField"
-                android:hint="yp"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextZp"
                 style="@style/InputField"
-                android:hint="zp"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>
 
         <!-- Point Normal -->
         <TextView
+            android:id="@+id/textViewNormalA"
             style="@style/SectionTitle"
-            android:text="Triangle Vertex A Normal [nxa, nya, nza]" />
+            android:text="Normal A" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,28 +142,26 @@
             <EditText
                 android:id="@+id/editTextNxa"
                 style="@style/InputField"
-                android:hint="nxa"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextNya"
                 style="@style/InputField"
-                android:hint="nya"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextNza"
                 style="@style/InputField"
-                android:hint="nza"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewNormalB"
             style="@style/SectionTitle"
-            android:text="Triangle Vertex B Normal [nxb, nyb, nzb]" />
+            android:text="Normal B" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,28 +171,26 @@
             <EditText
                 android:id="@+id/editTextNxb"
                 style="@style/InputField"
-                android:hint="nxb"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextNyb"
                 style="@style/InputField"
-                android:hint="nyb"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextNzb"
                 style="@style/InputField"
-                android:hint="nzb"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewNormalC"
             style="@style/SectionTitle"
-            android:text="Triangle Vertex C Normal [nxc, nyc, nzc]" />
+            android:text="Normal C" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -211,21 +200,18 @@
             <EditText
                 android:id="@+id/editTextNxc"
                 style="@style/InputField"
-                android:hint="nxc"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextNyc"
                 style="@style/InputField"
-                android:hint="nyc"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
 
             <EditText
                 android:id="@+id/editTextNzc"
                 style="@style/InputField"
-                android:hint="nzc"
                 android:layout_weight="1"
                 android:layout_width="0dp" />
         </LinearLayout>

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,18 +15,32 @@ public class PolygonActivity extends AppCompatActivity {
 
     private EditText editTextX0, editTextY0, editTextZ0;
     private EditText editTextXd, editTextYd, editTextZd;
-    private EditText editTextXp, editTextYp, editTextZp;
-    private EditText editTextNx, editTextNy, editTextNz;
     private EditText editTextXa, editTextYa, editTextZa;
     private EditText editTextXb, editTextYb, editTextZb;
     private EditText editTextXc, editTextYc, editTextZc;
     private Button buttonSubmit;
     private Button buttonReturn;
 
+    private Spanned getSubscriptText(String text) {
+        return Html.fromHtml(text.replaceAll("([xyzp])([0abcd])", "$1<sub><small><small>$2</small></small></sub>"), Html.FROM_HTML_MODE_LEGACY);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ray_to_polygon);
+
+        TextView textViewRayOrigin = findViewById(R.id.textViewRayOrigin);
+        TextView textViewRayDirection = findViewById(R.id.textViewRayDirection);
+        TextView textViewVertexA = findViewById(R.id.textViewVertexA);
+        TextView textViewVertexB = findViewById(R.id.textViewVertexB);
+        TextView textViewVertexC = findViewById(R.id.textViewVertexC);
+
+        textViewRayOrigin.setText(getSubscriptText("Ray Origin (p0) [x0, y0, z0]"));
+        textViewRayDirection.setText(getSubscriptText("Ray Direction (d) [xd, yd, zd]"));
+        textViewVertexA.setText(getSubscriptText("Vertex A [xa, ya, za]"));
+        textViewVertexB.setText(getSubscriptText("Vertex B [xb, yb, zb]"));
+        textViewVertexC.setText(getSubscriptText("Vertex C [xc, yc, zc]"));
 
         editTextX0 = findViewById(R.id.editTextX0);
         editTextY0 = findViewById(R.id.editTextY0);
@@ -43,6 +59,22 @@ public class PolygonActivity extends AppCompatActivity {
         editTextZc = findViewById(R.id.editTextZc);
         buttonSubmit = findViewById(R.id.buttonSubmit);
         buttonReturn = findViewById(R.id.buttonReturn);
+
+        editTextX0.setHint(getSubscriptText("x0"));
+        editTextY0.setHint(getSubscriptText("y0"));
+        editTextZ0.setHint(getSubscriptText("z0"));
+        editTextXd.setHint(getSubscriptText("xd"));
+        editTextYd.setHint(getSubscriptText("yd"));
+        editTextZd.setHint(getSubscriptText("zd"));
+        editTextXa.setHint(getSubscriptText("xa"));
+        editTextYa.setHint(getSubscriptText("ya"));
+        editTextZa.setHint(getSubscriptText("za"));
+        editTextXb.setHint(getSubscriptText("xb"));
+        editTextYb.setHint(getSubscriptText("yb"));
+        editTextZb.setHint(getSubscriptText("zb"));
+        editTextXc.setHint(getSubscriptText("xc"));
+        editTextYc.setHint(getSubscriptText("yc"));
+        editTextZc.setHint(getSubscriptText("zc"));
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +112,6 @@ public class PolygonActivity extends AppCompatActivity {
                 intent.putExtra("xc", xc);
                 intent.putExtra("yc", yc);
                 intent.putExtra("zc", zc);
-
-//                Tester tester = new Tester();
-//                intent = tester.getTestcasePolygon(intent, 5);
 
                 startActivity(intent);
             }

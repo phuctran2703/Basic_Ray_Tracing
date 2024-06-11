@@ -13,8 +13,8 @@
 
         <!-- Ray Origin -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Ray Origin (p0) [x0, y0, z0]" />
+            android:id="@+id/textViewRayOrigin"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,26 +24,23 @@
             <EditText
                 android:id="@+id/editTextX0"
                 style="@style/InputField"
-                android:hint="x0"
                 android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextY0"
                 style="@style/InputField"
-                android:hint="y0"
                 android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZ0"
                 style="@style/InputField"
-                android:hint="z0"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Ray Direction -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Ray Direction (d) [xd, yd, zd]" />
+            android:id="@+id/textViewRayDirection"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,26 +50,23 @@
             <EditText
                 android:id="@+id/editTextXd"
                 style="@style/InputField"
-                android:hint="xd"
                 android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextYd"
                 style="@style/InputField"
-                android:hint="yd"
                 android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZd"
                 style="@style/InputField"
-                android:hint="zd"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Sphere Center -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Sphere Center (c) [xc, yc, zc]" />
+            android:id="@+id/textViewSphereCenter"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,31 +76,27 @@
             <EditText
                 android:id="@+id/editTextXc"
                 style="@style/InputField"
-                android:hint="xc"
                 android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextYc"
                 style="@style/InputField"
-                android:hint="yc"
                 android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZc"
                 style="@style/InputField"
-                android:hint="zc"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Sphere Radius -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Sphere Radius (r)" />
+            android:id="@+id/textViewSphereRadius"
+            style="@style/SectionTitle" />
 
         <EditText
             android:id="@+id/editTextR"
-            style="@style/InputField"
-            android:hint="r" />
+            style="@style/InputField" />
 
         <!-- Submit Button -->
         <Button

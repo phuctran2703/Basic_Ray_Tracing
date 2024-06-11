@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class BarycentricActivity extends AppCompatActivity {
     private EditText editTextXa, editTextYa, editTextZa;
@@ -18,10 +21,30 @@ public class BarycentricActivity extends AppCompatActivity {
     private EditText editTextNxc, editTextNyc, editTextNzc;
     private Button buttonSubmit, buttonReturn;
 
+    private Spanned getSubscriptText(String text) {
+        return Html.fromHtml(text.replaceAll("([xyzpn])([abcp]|xa|xb|xc|ya|yb|yc|za|zb|zc)", "$1<sub><small><small><small>$2</small></small></small></sub>"), Html.FROM_HTML_MODE_LEGACY);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barycentric);
+
+        TextView textViewVertexA = findViewById(R.id.textViewVertexA);
+        TextView textViewVertexB = findViewById(R.id.textViewVertexB);
+        TextView textViewVertexC = findViewById(R.id.textViewVertexC);
+        TextView textViewVertexP = findViewById(R.id.textViewPointP);
+        TextView textViewNormalA = findViewById(R.id.textViewNormalA);
+        TextView textViewNormalB = findViewById(R.id.textViewNormalB);
+        TextView textViewNormalC = findViewById(R.id.textViewNormalC);
+
+        textViewVertexA.setText(getSubscriptText("Vertex A [xa, ya, za]"));
+        textViewVertexB.setText(getSubscriptText("Vertex B [xb, yb, zb]"));
+        textViewVertexC.setText(getSubscriptText("Vertex C [xc, yc, zc]"));
+        textViewVertexP.setText(getSubscriptText("Point P [xp, yp, zp]"));
+        textViewNormalA.setText(getSubscriptText("Normal A [nxa, nya, nza]"));
+        textViewNormalB.setText(getSubscriptText("Normal B [nxb, nyb, nzb]"));
+        textViewNormalC.setText(getSubscriptText("Normal C [nxc, nyc, nzc]"));
 
         // Ánh xạ các view từ XML
         editTextXa = findViewById(R.id.editTextXa);
@@ -47,6 +70,28 @@ public class BarycentricActivity extends AppCompatActivity {
         editTextNzc = findViewById(R.id.editTextNzc);
         buttonSubmit = findViewById(R.id.buttonSubmit);
         buttonReturn = findViewById(R.id.buttonReturn);
+
+        editTextXa.setHint(getSubscriptText("xa"));
+        editTextYa.setHint(getSubscriptText("ya"));
+        editTextZa.setHint(getSubscriptText("za"));
+        editTextXb.setHint(getSubscriptText("xb"));
+        editTextYb.setHint(getSubscriptText("yb"));
+        editTextZb.setHint(getSubscriptText("zb"));
+        editTextXc.setHint(getSubscriptText("xc"));
+        editTextYc.setHint(getSubscriptText("yc"));
+        editTextZc.setHint(getSubscriptText("zc"));
+        editTextXp.setHint(getSubscriptText("xp"));
+        editTextYp.setHint(getSubscriptText("yp"));
+        editTextZp.setHint(getSubscriptText("zp"));
+        editTextNxa.setHint(getSubscriptText("nxa"));
+        editTextNya.setHint(getSubscriptText("nya"));
+        editTextNza.setHint(getSubscriptText("nza"));
+        editTextNxb.setHint(getSubscriptText("nxb"));
+        editTextNyb.setHint(getSubscriptText("nyb"));
+        editTextNzb.setHint(getSubscriptText("nzb"));
+        editTextNxc.setHint(getSubscriptText("nxc"));
+        editTextNyc.setHint(getSubscriptText("nyc"));
+        editTextNzc.setHint(getSubscriptText("nzc"));
 
         if (savedInstanceState != null) {
             editTextXa.setText(String.valueOf(savedInstanceState.getFloat("xa")));

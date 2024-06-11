@@ -13,8 +13,8 @@
 
         <!-- Ray Origin -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Ray Origin (p0) [x0, y0, z0]" />
+            android:id="@+id/textViewRayOrigin"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,29 +24,23 @@
             <EditText
                 android:id="@+id/editTextX0"
                 style="@style/InputField"
-                android:hint="x0"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextY0"
                 style="@style/InputField"
-                android:hint="y0"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZ0"
                 style="@style/InputField"
-                android:hint="z0"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Ray Direction -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Ray Direction (d) [xd, yd, zd]" />
+            android:id="@+id/textViewRayDirection"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,29 +50,23 @@
             <EditText
                 android:id="@+id/editTextXd"
                 style="@style/InputField"
-                android:hint="xd"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextYd"
                 style="@style/InputField"
-                android:hint="yd"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZd"
                 style="@style/InputField"
-                android:hint="zd"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Triangle Vertices -->
         <TextView
-            style="@style/SectionTitle"
-            android:text="Triangle Vertex A [xa, ya, za]" />
+            android:id="@+id/textViewVertexA"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,28 +76,22 @@
             <EditText
                 android:id="@+id/editTextXa"
                 style="@style/InputField"
-                android:hint="xa"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextYa"
                 style="@style/InputField"
-                android:hint="ya"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZa"
                 style="@style/InputField"
-                android:hint="za"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
-            style="@style/SectionTitle"
-            android:text="Triangle Vertex B [xb, yb, zb]" />
+            android:id="@+id/textViewVertexB"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,28 +101,22 @@
             <EditText
                 android:id="@+id/editTextXb"
                 style="@style/InputField"
-                android:hint="xb"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextYb"
                 style="@style/InputField"
-                android:hint="yb"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZb"
                 style="@style/InputField"
-                android:hint="zb"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
-            style="@style/SectionTitle"
-            android:text="Triangle Vertex C [xc, yc, zc]" />
+            android:id="@+id/textViewVertexC"
+            style="@style/SectionTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,38 +126,32 @@
             <EditText
                 android:id="@+id/editTextXc"
                 style="@style/InputField"
-                android:hint="xc"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextYc"
                 style="@style/InputField"
-                android:hint="yc"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/editTextZc"
                 style="@style/InputField"
-                android:hint="zc"
-                android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Submit Button -->
         <Button
             android:id="@+id/buttonSubmit"
             style="@style/ActionButton"
-            android:text="Submit"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            android:text="Submit" />
 
         <!-- Return Button -->
         <Button
             android:id="@+id/buttonReturn"
             style="@style/ActionButton"
-            android:text="Return"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            android:text="Return" />
 
     </LinearLayout>
 </ScrollView>
