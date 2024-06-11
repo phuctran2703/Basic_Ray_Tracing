@@ -147,7 +147,7 @@ class PlaneMeshHelper extends MeshHelper {
         ab = new float[]{b[0] - a[0], b[1] - a[1], b[2] - a[2]};
         ac = new float[]{c[0] - a[0], c[1] - a[1], c[2] - a[2]};
         bc = new float[]{c[0] - b[0], c[1] - b[1], c[2] - b[2]};
-        
+
         this.normal = new float[]{
                 ab[1] * ac[2] - ab[2] * ac[1],
                 ab[2] * ac[0] - ab[0] * ac[2],
@@ -157,7 +157,7 @@ class PlaneMeshHelper extends MeshHelper {
 
     public float[] getIntersectionPoints() {
         float dotProduct = rayDirection[0] * normal[0] + rayDirection[1] * normal[1] + rayDirection[2] * normal[2];
-        
+
         float distance = (normal[0] * (a[0] - rayPosition[0]) +
                 normal[1] * (a[1] - rayPosition[1]) +
                 normal[2] * (a[2] - rayPosition[2])) / dotProduct;
@@ -204,9 +204,45 @@ class PlaneMeshHelper extends MeshHelper {
         float[] intersectionAB = findVectorIntersection(rayPosition, rayDirection, a, ab);
         float[] intersectionBC = findVectorIntersection(rayPosition, rayDirection, b, bc);
         float[] intersectionAC = findVectorIntersection(rayPosition, rayDirection, c, ac);
-        if (intersectionAB == null || intersectionBC == null || intersectionAC == null) return null;
+        if (intersectionAB == null && intersectionBC == null && intersectionAC == null) return null;
 
-        return new float[]{1.0f, 1.0f, 1.0f};
+        if (intersectionAB != null && intersectionAB.length == 2) return intersectionAB;
+        if (intersectionBC != null && intersectionBC.length == 2) return intersectionBC;
+        if (intersectionAC != null && intersectionAC.length == 2) return intersectionAC;
+
+        if(intersectionAB == null){
+            if(intersectionBC != null && intersectionAC != null) {
+                float[] finalIntersection = new float[]{intersectionBC[0], intersectionBC[1], intersectionBC[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+                return finalIntersection;
+            } else if (intersectionAC != null) {
+                return intersectionAC;
+            }
+            return intersectionBC;
+        }
+
+        if (intersectionBC == null){
+            if (intersectionAB != null && intersectionAC != null){
+                float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionAC[0], intersectionAC[1], intersectionAC[2]};
+                return finalIntersection;
+            }
+            else if (intersectionAC != null){
+                return intersectionAC;
+            }
+            return intersectionAB;
+        }
+
+        if (intersectionAC == null){
+            if (intersectionAB != null && intersectionBC != null){
+                float[] finalIntersection = new float[]{intersectionAB[0], intersectionAB[1], intersectionAB[2], intersectionBC[0], intersectionBC[1], intersectionBC[2]};
+                return finalIntersection;
+            }
+            else if (intersectionBC != null){
+                return intersectionBC;
+            }
+            return intersectionAB;
+        }
+
+        return null;
     }
 
     public boolean checkPointInPlane(float[] point) {
