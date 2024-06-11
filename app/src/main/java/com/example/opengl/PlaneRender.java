@@ -17,6 +17,8 @@ public class PlaneRender extends MeshRender {
     private final float[] rayDirection;
 
     private boolean isInsideTriangle;
+    private boolean inPlane;
+    private boolean isSingleIntersection;
 
     public PlaneRender(float[] pointA, float[] pointB, float[] pointC, float[] rayPosition, float[] rayDirection) {
         super(new float[]{pointA[0], pointA[1], pointA[2], pointB[0], pointB[1], pointB[2], pointC[0], pointC[1], pointC[2]});
@@ -35,6 +37,7 @@ public class PlaneRender extends MeshRender {
         }
 
         this.helper = new PlaneMeshHelper(rayPosition, rayDirection, pointA, pointB, pointC);
+        this.isSingleIntersection = true;
 
         setupRayBuffer();
         setupIntersectionPointBuffer();
@@ -54,18 +57,14 @@ public class PlaneRender extends MeshRender {
     }
 
     private void setupIntersectionPointBuffer() {
-
         float[] intersectionPoints = helper.getIntersectionPoints();
         if (intersectionPoints == null) {
-            mPointBuffer = ByteBuffer.allocateDirect(0)
-                    .order(ByteOrder.nativeOrder())
-                    .asFloatBuffer();
+            inPlane = this.helper.checkRayInPlane();
+            isSingleIntersection = false;
             return;
         }
 
         isInsideTriangle = this.helper.isInsideTriangle(intersectionPoints);
-
-        Log.d("IntersectionPoints", intersectionPoints[0] + " " + intersectionPoints[1] + " " + intersectionPoints[2]);
         Log.d("IsInsideTriangle", isInsideTriangle + "");
 
         mPointBuffer = ByteBuffer.allocateDirect(intersectionPoints.length * mBytesPerFloat)
@@ -97,15 +96,19 @@ public class PlaneRender extends MeshRender {
         GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, mRayBuffer.capacity() * mBytesPerFloat, mRayBuffer, GLES30.GL_DYNAMIC_DRAW);
 
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, mVBOHandles[2]);
-        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, mPointBuffer.capacity() * mBytesPerFloat, mPointBuffer, GLES30.GL_DYNAMIC_DRAW);
+        // GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, mPointBuffer.capacity() * mBytesPerFloat, mPointBuffer, GLES30.GL_DYNAMIC_DRAW);
     }
 
     @Override
     public void onDrawFrame(GL10 glUnused) {
         super.onDrawFrame(glUnused);
 
-        super.drawRay(10.0f, Color.BLUE, Color.BLACK);
-
+        if (inPlane) {
+            super.drawRay(10.0f, Color.BLUE, Color.RED);
+        }
+        else {
+            super.drawRay(10.0f, Color.BLUE, Color.BLACK);
+        }
         drawPoints(10.0f);
 
         super.drawMesh(Color.YELLOW);
@@ -113,16 +116,39 @@ public class PlaneRender extends MeshRender {
 
     @Override
     protected void drawPoints(float pointSize) {
-        super.drawPoints(pointSize);
+        if (!isSingleIntersection) {
+            if (!inPlane) return;
+            float[] intersectionPoints = this.helper.getTriangleIntersection();
+            if (intersectionPoints == null) return;
+            else{
+                for (int i = 0; i < 3; i++) {
+                    Log.d("IntersectionPoint", intersectionPoints[i] + "");
+                }
+                mPointBuffer = ByteBuffer.allocateDirect(intersectionPoints.length * mBytesPerFloat)
+                        .order(ByteOrder.nativeOrder())
+                        .asFloatBuffer();
+                mPointBuffer.put(intersectionPoints);
+                mPointBuffer.position(0);
 
-        if (isInsideTriangle) {
+                super.drawPoints(pointSize);
+            }
+
             GLES30.glUniform4fv(mColorHandle, 0, Color.GREEN, 0);
+
+            if (intersectionPoints.length == 1) GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
+            else GLES30.glDrawArrays(GLES30.GL_LINES, 0, 2);
         }
         else {
-            GLES30.glUniform4fv(mColorHandle, 0, Color.RED, 0);
-        }
+            super.drawPoints(pointSize);
 
-        GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
+            if (isInsideTriangle) {
+                GLES30.glUniform4fv(mColorHandle, 0, Color.GREEN, 0);
+            } else {
+                GLES30.glUniform4fv(mColorHandle, 0, Color.RED, 0);
+            }
+
+            GLES30.glDrawArrays(GLES30.GL_POINTS, 0, 1);
+        }
 
         GLES30.glDisableVertexAttribArray(mPositionHandle);
     }

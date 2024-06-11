@@ -152,12 +152,10 @@ public abstract class MeshRender implements GLSurfaceView.Renderer {
     }
 
     protected void drawPoints(float pointSize){
-        if (mPointBuffer.capacity() == 0) {
-            return;
-        }
         GLES30.glUseProgram(mProgramHandle);
 
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, mVBOHandles[2]);
+        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, mPointBuffer.capacity() * mBytesPerFloat, mPointBuffer, GLES30.GL_DYNAMIC_DRAW);
         GLES30.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES30.GL_FLOAT, false, mPositionDataSize * mBytesPerFloat, 0);
         GLES30.glEnableVertexAttribArray(mPositionHandle);
 

@@ -101,6 +101,10 @@ public class SphereRender extends MeshRender {
 
     @Override
     protected void drawPoints(float pointSize) {
+        if (mPointBuffer.capacity() == 0) {
+            return;
+        }
+
         super.drawPoints(pointSize);
 
         GLES30.glUniform4fv(mColorHandle, 0, Color.WHITE, 0);
